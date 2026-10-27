@@ -1,0 +1,13 @@
+pipeline {
+  agent any
+  stages {
+    stage('Init')         { steps { sh 'tofu init -input=false' } }
+    stage('Format Check') { steps { sh 'tofu fmt -check -recursive' } }
+    stage('Validate')     { steps { sh 'tofu validate' } }
+    stage('Plan')         { steps { sh 'tofu plan -input=false -out=tfplan' } }
+    stage('Approval') {
+      steps { input message: 'Review the plan above. Apply it?', ok: 'Apply' }
+    }
+    stage('Apply')        { steps { sh 'tofu apply -input=false tfplan' } }
+  }
+}

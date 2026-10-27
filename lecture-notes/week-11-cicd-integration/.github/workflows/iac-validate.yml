@@ -1,0 +1,20 @@
+# .github/workflows/iac-validate.yml
+name: IaC Validation Pipeline
+on: [push]
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup OpenTofu
+        uses: opentofu/setup-opentofu@v1
+      - name: Format Check
+        run: tofu fmt -check
+      - name: Init
+        run: tofu init
+      - name: Plan
+        run: tofu plan
+      - name: Install Ansible
+        run: pipx install ansible-core
+      - name: Ansible Syntax Check
+        run: ansible-playbook --syntax-check playbook.yml

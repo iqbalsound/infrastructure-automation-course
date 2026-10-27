@@ -1,0 +1,25 @@
+---
+- name: Configure web servers
+  hosts: webservers
+  become: true
+  vars:
+    student_id: "Your Name - Roll No"
+  tasks:
+    - name: Install nginx
+      ansible.builtin.apt:
+        name: nginx
+        state: present
+        update_cache: true
+        cache_valid_time: 3600
+
+    - name: Ensure nginx is running
+      ansible.builtin.service:
+        name: nginx
+        state: started
+        use: service   # containers have no systemd, so use the init-script backend
+
+    - name: Deploy a custom index page
+      ansible.builtin.template:
+        src: templates/index.html.j2
+        dest: /var/www/html/index.html
+        mode: "0644"

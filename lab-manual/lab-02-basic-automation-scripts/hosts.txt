@@ -1,0 +1,6 @@
+web01
+web02
+db01
+# comments and blank lines are ignored
+
+cache01

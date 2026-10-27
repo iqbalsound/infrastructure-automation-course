@@ -1,0 +1,6 @@
+# Illustrative provider-native style template (read-only comparison exercise)
+Resources:
+  MyBucket:
+    Type: "CloudProviderX::Storage::Bucket"
+    Properties:
+      BucketName: "course-demo-bucket"

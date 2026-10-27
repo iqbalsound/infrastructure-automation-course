@@ -1,0 +1,4 @@
+[web]
+%{ for h in hosts ~}
+${h} ansible_connection=community.docker.docker ansible_python_interpreter=/usr/bin/python3
+%{ endfor ~}

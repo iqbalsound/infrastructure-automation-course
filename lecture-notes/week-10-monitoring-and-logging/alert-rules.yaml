@@ -1,0 +1,11 @@
+# Example Prometheus alert rule (YAML). With kube-prometheus-stack, place it inside a PrometheusRule resource (spec.groups).
+groups:
+  - name: web-app-alerts
+    rules:
+      - alert: HighCPUUsage
+        expr: sum by (pod) (rate(container_cpu_usage_seconds_total{pod=~"web-app.*"}[2m])) > 0.8
+        for: 2m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High CPU usage detected on web-app pod"

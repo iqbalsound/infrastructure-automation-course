@@ -1,0 +1,27 @@
+# hpa.yaml
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: web-app-hpa
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: web-app
+  minReplicas: 2
+  maxReplicas: 6
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 50
+
+# Prerequisite: the HPA measures utilization against each container's CPU *request*
+# kubectl set resources deployment web-app --requests=cpu=100m
+
+# Commands
+# kubectl apply -f hpa.yaml
+# kubectl get hpa -w
+# kubectl top pods

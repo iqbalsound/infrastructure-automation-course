@@ -1,0 +1,7 @@
+# Step 3: Ansible playbook configures the provisioned container (Week 4 pattern)
+- hosts: app
+  tasks:
+    - name: Install application dependencies
+      apt:
+        name: nginx
+        state: present

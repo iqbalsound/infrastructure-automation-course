@@ -1,0 +1,17 @@
+# playbook.yml
+---
+- hosts: webservers
+  become: yes
+  tasks:
+    - name: Install nginx
+      apt:
+        name: nginx
+        state: present
+        update_cache: yes
+    - name: Ensure nginx is running
+      service:
+        name: nginx
+        state: started
+        enabled: yes
+
+# Run: ansible-playbook -i inventory.ini playbook.yml
